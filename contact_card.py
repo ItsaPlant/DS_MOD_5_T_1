@@ -49,12 +49,12 @@ class ContactCard:
     
 
     @property
-    def full_name(self):
-        return f'{self.name} {self.surname}, save {self.fullname_len} char spaces'
+    def label_length(self):
+        return self.fullname_len
     
 
-    @full_name.setter
-    def full_name(self):
+    @label_length.setter
+    def label_length(self):
         name_len = len(self.name)
         surname_len = len(self.surname)
         self.fullname_len = name_len + surname_len
