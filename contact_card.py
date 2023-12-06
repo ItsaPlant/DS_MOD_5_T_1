@@ -18,11 +18,11 @@ fake.add_provider(arch_professions_provider)
 
 
 class ContactCard:
-    def __init__(self):
-        self.name = None
-        self.surname = None
+    def __init__(self, name, surname, mail, phone):
+        self.name = name
+        self.surname = surname
         self.fullname_len = None
-        self.phone = None
+        self.phone = phone
         
 
     def __str__(self) -> str: #IDE mi tak wrzuciło, ale po co ta strzałka?
@@ -35,13 +35,6 @@ class ContactCard:
 
     def __ge__(self, other, param): #jak rozwinąć taki pomysl?
         return self.param >= other.param
-
-
-    def generate(self):
-        self.name = fake.first_name()
-        self.surname = fake.last_name()
-        self.mail = fake.email()
-        self.phone = fake.phone_number()
     
 
     def contact(self):
@@ -66,11 +59,11 @@ class ContactCard:
 
 
 class BusinessCard(ContactCard):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, company, position, phone_work, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.company = None
-        self.position = None
-        self.phone_work = None
+        self.company = company
+        self.position = position
+        self.phone_work = phone_work
 
     
     def __str__(self) -> str: #IDE mi tak wrzuciło, ale po co ta strzałka?
@@ -79,29 +72,33 @@ class BusinessCard(ContactCard):
 
     def __repr__(self) -> str: #IDE mi tak wrzuciło, ale po co ta strzałka?
         return f'{self.name} {self.surname} -> {self.phone_work}'
-    
-    
-    def generate(self):
-        super().generate()
-        self.company = fake.job()
-        self.position = fake.architectural_profession()
-        self.phone_work = fake.phone_number()
+            
 
     def contact(self):
         return f'Kontaktuje się z: {self.name} {self.surname}, pod numerem: {self.phone_work}'
         
+def generate():
+    name = fake.first_name()
+    surname = fake.last_name()
+    mail = fake.email()
+    phone = fake.phone_number()
+    company = fake.job()
+    position = fake.architectural_profession()
+    phone_work = fake.phone_number()
+    return (name, surname, mail, phone, company, position, phone_work)
+
 
 def create_contacts(type, number):
     cards = []
     if type == 'B':
         for i in range(number):
-            b_card = BusinessCard()
-            b_card.generate()
+            name, surname, mail, phone, company, position, phone_work = generate()
+            b_card = BusinessCard(name, surname, mail, phone, company, position, phone_work)
             cards.append(b_card)
     elif type == 'C':
         for i in range(number):
-            c_card = ContactCard()
-            c_card.generate()
+            name, surname, mail, phone, _, _, _ = generate()
+            c_card = ContactCard(name, surname, mail, phone)
             cards.append(c_card)
     return cards
 
