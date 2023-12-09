@@ -50,12 +50,7 @@ class ContactCard:
     def label_length(self):
         name_len = len(self.name)
         surname_len = len(self.surname)
-        self._fullname_len = name_len + surname_len
-
-    
-    @staticmethod
-    def sort(obj_list, keyfun):
-        return obj_list.sort(key=keyfun, reverse=True) # sort in-place
+        self._fullname_len = name_len + surname_len    
 
 
 class BusinessCard(ContactCard):
@@ -89,6 +84,10 @@ def generate():
         return (name, surname, mail, phone, company, position, phone_work)
 
 
+def sort(obj_list, keyfun):
+        return obj_list.sort(key=keyfun, reverse=True) # sort in-place
+
+
 def create_contacts(type, number):
     cards = []
     name, surname, mail, phone, company, position, phone_work = generate()
@@ -102,7 +101,9 @@ def create_contacts(type, number):
             cards.append(c_card)
     return cards
 
-print(create_contacts('B', 10))
+
+if __name__ == "__main__":
+    print(create_contacts('B', 10))
 
 # class Obj:
 #     def __init__(self):
