@@ -1,11 +1,6 @@
 from faker import Faker
 from faker.providers import DynamicProvider
 
-try: import operator
-except ImportError: keyfun= lambda x: x.count # use a lambda if no operator module
-else: keyfun= operator.attrgetter("count") # use operator since it's faster than lambda
-
-
 
 arch_professions_provider = DynamicProvider(
     provider_name="architectural_profession",
@@ -82,10 +77,6 @@ def generate():
         position = fake.architectural_profession()
         phone_work = fake.phone_number()
         return (name, surname, mail, phone, company, position, phone_work)
-
-
-def sort(obj_list, keyfun):
-        return obj_list.sort(key=keyfun, reverse=True) # sort in-place
 
 
 def create_contacts(type, number):
